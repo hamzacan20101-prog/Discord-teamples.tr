@@ -6,16 +6,13 @@
   <title>Wotex - Oyun Mağazası</title>
   <link rel="stylesheet" href="styles.css" />
   <style>
-    /* Küçük ufak tefek header iyileştirmeleri */
+    /* Header ve form stilleri */
     .header-actions {
       display: flex;
       align-items: center;
       gap: 10px;
     }
-    .auth-chip {
-      font-size: 0.9rem;
-      opacity: 0.9;
-    }
+    .auth-chip { font-size: 0.9rem; opacity: 0.9; }
     .hidden { display: none !important; }
     form .row { display:flex; flex-direction:column; gap:6px; margin-bottom:12px; text-align:left; }
     form label { font-size:0.9rem; }
@@ -23,10 +20,7 @@
       width:100%; padding:10px; border-radius:6px; border:1px solid #3a566b;
       background:#1b2838; color:#c7d5e0;
     }
-    .btn {
-      display:inline-block; background:#5c7e10; color:#fff; padding:10px 14px;
-      border-radius:6px; font-weight:700; text-align:center; cursor:pointer;
-    }
+    .btn { display:inline-block; background:#5c7e10; color:#fff; padding:10px 14px; border-radius:6px; font-weight:700; text-align:center; cursor:pointer; }
     .btn:hover { background:#7fbf16; }
     .btn-secondary { background:#2a475e; }
     .tabs { display:flex; gap:8px; margin-bottom:14px; }
@@ -34,10 +28,48 @@
     .tab.active { background:#66c0f4; color:#fff; }
     .muted { color:#a9b7c6; font-size:0.9rem; }
     .provider-btn { width:100%; margin-top:8px; }
+
+    /* Kategori filtre barı */
+    .category-bar {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-bottom: 20px;
+      padding: 10px 0;
+    }
+    .cat-btn {
+      background: #22384a;
+      color: #c7d5e0;
+      border: none;
+      border-radius: 20px;
+      padding: 8px 16px;
+      cursor: pointer;
+      font-weight: 600;
+      transition: all 0.2s ease-in-out;
+    }
+    .cat-btn:hover { background: #66c0f4; color: #fff; }
+    .cat-btn.active { background: #66c0f4; color: #fff; }
+    @media (max-width: 600px) {
+      .category-bar { justify-content: center; }
+      .cat-btn { flex: 1 1 auto; text-align: center; }
+    }
+
+    /* Öne çıkan oyun kartları */
+    .games { display: flex; flex-wrap: wrap; gap: 15px; }
+    .game-card {
+      background:#1b2838;
+      border-radius:8px;
+      padding:10px;
+      width:200px;
+      text-align:center;
+      color:#c7d5e0;
+    }
+    .game-card img { width:100%; border-radius:6px; margin-bottom:8px; }
+    .buy-btn { margin-top:8px; background:#5c7e10; padding:6px; border-radius:6px; cursor:pointer; display:inline-block; font-weight:600; }
+    .buy-btn:hover { background:#7fbf16; }
   </style>
-</head>
-<body>
- <!-- Start of LiveChat (www.livechat.com) code -->
+</head> 
+<!-- Start of LiveChat (www.livechat.com) code -->
 <script>
     window.__lc = window.__lc || {};
     window.__lc.license = 19282110;
@@ -47,16 +79,14 @@
 </script>
 <noscript><a href="https://www.livechat.com/chat-with/19282110/" rel="nofollow">Chat with us</a>, powered by <a href="https://www.livechat.com/?welcome" rel="noopener nofollow" target="_blank">LiveChat</a></noscript>
 <!-- End of LiveChat code -->
-
+<body>
 
 <header>
   <div class="container" style="display:flex; justify-content:space-between; align-items:center; padding:15px 0;">
-    <!-- Logo eklendi -->
     <div style="display:flex; align-items:center; gap:10px;">
-      <img src="standard (1).gif" alt="Wotex Logo" style="height:50px; border-radius:8px;"/>
+      <img src="resimler/standard (1).gif" alt="Wotex Logo" style="height:50px; border-radius:8px;"/>
       <h1 style="margin:0;">Wotex Download</h1>
     </div>
-
     <div class="header-actions">
       <span id="userChip" class="auth-chip hidden">👤 <span id="userEmail"></span></span>
       <a id="authBtn" class="header-btn" href="javascript:void(0)">Giriş / Kaydol</a>
@@ -70,25 +100,29 @@
 </header>
 
 <main class="container">
-  <section class="game-list">
-    <!-- GIF buraya eklendi -->
-    <img src="standard.gif" alt="Banner" style="width:100%; max-height:80px; object-fit:cover; margin-bottom:10px;"/>
+  <img src="resimler/standard.gif" alt="Banner" style="width:100%; max-height:80px; object-fit:cover; margin-bottom:10px;"/>
 
-    <h2>Öne Çıkan Oyunlar</h2>
-    <div class="games" id="games">
-      <!-- Demo kartlar -->
-      <div class="game-card">
-        <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAQ0AAACUCAMAAAC+0owFAAAAA1BMVEUAAACnej3aAAAAPUlEQVR4nO3BAQ0AAADCoPdPbQ8HFAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA/BucGAABs/UZwQAAAABJRU5ErkJggg==" alt="Oyun 1">
-        <div class="game-info">
-          <h3>İlan boş</h3>
-          <p>İlan ver! tıkla.</p>
-        </div>
-        <div class="buy-btn" data-sku="pack1">İndir / Satın Al</div>
-      </div>
-    </div>
+  <!-- Kategori filtre barı -->
+  <section class="category-bar" aria-label="Kategoriler">
+    <button class="cat-btn active" data-filter="all">Hepsi</button>
+    <button class="cat-btn" data-filter="pubg">PUBG</button>
+    <button class="cat-btn" data-filter="valorant">Valorant</button>
+    <button class="cat-btn" data-filter="discord">Discord</button>
+    <button class="cat-btn" data-filter="roblox">Roblox</button>
   </section>
-</main>
 
+  <h2>Öne Çıkan Oyunlar</h2>
+  <div class="games" id="games">
+    <div class="game-card" data-category="pubg">
+      <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAQ0AAACUCAMAAAC+0owFAAAAA1BMVEUAAACnej3aAAAAPUlEQVR4nO3BAQ0AAADCoPdPbQ8HFAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA/BucGAABs/UZwQAAAABJRU5ErkJggg==" alt="Oyun 1">
+      <div class="game-info">
+        <h3>İlan boş</h3>
+        <p>İlan ver! tıkla.</p>
+      </div>
+      <div class="buy-btn" data-sku="pubg">İndir / Satın Al</div>
+    </div>
+  </div>
+</main>
 
 <footer>
   <p>© 2025 Wotex Download. Tüm hakları saklıdır.</p>
@@ -140,7 +174,29 @@
   </div>
 </div>
 
-<!-- scripts.js içinde Firebase modülleri import ediliyor -->
 <script type="module" src="scripts.js"></script>
 </body>
 </html>
+<script>
+  // Tüm kategori butonlarını seç
+  const catButtons = document.querySelectorAll('.cat-btn');
+  const gameCards = document.querySelectorAll('.game-card');
+
+  catButtons.forEach(btn => {
+    btn.addEventListener('click', () => {
+      // Aktif butonu değiştir
+      catButtons.forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+
+      const filter = btn.getAttribute('data-filter');
+
+      gameCards.forEach(card => {
+        if (filter === 'all' || card.getAttribute('data-category') === filter) {
+          card.style.display = 'block';
+        } else {
+          card.style.display = 'none';
+        }
+      });
+    });
+  });
+</script>
